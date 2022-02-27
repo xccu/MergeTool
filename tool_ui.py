@@ -1,3 +1,4 @@
+# encoding: utf-8
 from tkinter import *           # 导入 Tkinter 库
 # Python3.x 导入方法
 #from tkinter import * 

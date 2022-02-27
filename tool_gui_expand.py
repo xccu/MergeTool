@@ -1,3 +1,4 @@
+# encoding: utf-8
 #GUI扩展
 from tkinter import *
 
