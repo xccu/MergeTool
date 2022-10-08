@@ -2,6 +2,7 @@
 import os
 import os.path 
 import shutil
+import datetime
 
 class File_Service():
     def __init__(self,callback=None):
@@ -77,13 +78,15 @@ class Merge_Service():
     def default_print(self,data):
         print(str(data))
     
-    def merge(self,pathlist):
+    def merge(self,pathlist,fileName):
+        if len(fileName) == 0:
+            fileName =  datetime.datetime.strftime(datetime.datetime.now(),'%Y%m%d%H%M%S')+'.ts'
         self.print_func(pathlist)
         #os.chdir("ts/")
         os.chdir(self.output_path)
         self.shell_str = '+'.join(pathlist)
         self.shell_str = self.shell_str.replace('/','\\')
         self.print_func("cmd")
-        self.shell_str = 'copy /b '+ self.shell_str + ' 5.mp4' #该命令不支持中文
+        self.shell_str = 'copy /b '+ self.shell_str + ' ' + fileName #该命令不支持中文
         os.system(self.shell_str)
         self.print_func(self.shell_str)

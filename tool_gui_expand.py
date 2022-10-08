@@ -49,6 +49,7 @@ class Text_PX():
         self.frame.pack_propagate(0)
 
         self.text = Text(self.frame)
+        #self.text["textString"] = self.get("1.0","end")
         self.text["width"] = self.width
         self.text["height"] = self.height
         self.text["bg"] = get_value("bg",kw)
