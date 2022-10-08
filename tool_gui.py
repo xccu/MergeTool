@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from tool_gui_expand import *
 from tool_service import *
+from tool_setting_gui import *
 import _thread
 import os
 
@@ -28,6 +29,17 @@ class Init_Window():
 
     #初始化
     def init(self):
+
+
+        #样式字典
+        btn_styles = {
+            'width':80,'height':23,'bd': 0,
+            'background': "#00ABFF","enterBg":"#4D4D4D","fg":"white" ,
+            "leaveBg":"#00ABFF","activebackground":"#7689ED"
+        }
+        btn_out_styles = {'relief': "solid",'bd': 0,'bdcolor':"#BCBCBC","background":"#00ABFF","enterBg":"#4D4D4D","fg":"white","leaveBg":"#00ABFF","activebackground":"#7689ED",}
+        text_styles = {'bd':1,'bdcolor':"#BCBCBC"}
+
         #设置窗体title
         self.window.title('文件合并工具')
         #设置窗体宽高
@@ -37,55 +49,68 @@ class Init_Window():
         #固定宽高，防止用户调整尺寸
         self.window.resizable(0,0) 
 
-        #self.window.toolbar = Frame(self.window, borderwidth=0)
-        self.container = Frame(self.window, width=800, height=430)
+        self.container = Frame(self.window, width=800, height=430,background="#F2F2F2")
         self.container.pack()
+
+        #self.head_frame = Frame(self.container, width=800, height=30,background="#4D4D4D")
+        #self.head_frame.place(x=0,y=0)
+
+        #self.cmd_frame = Frame(self.container, width=385, height=70,background="#FFFFFF")
+        #self.cmd_frame.place(x=10,y=40)
+
+        #self.setting_frame = Frame(self.container, width=385, height=70,background="#FFFFFF")
+        #self.setting_frame.place(x=405,y=40)
+
         #self.container.grid_propagate(False)
 
         #导出列表按钮
-        self.export_list_button = Button_PX(self.container, text="导出列表", width=80,command=self.export_list_click)  
+        self.export_list_button = Button_PX(self.container, text="导出列表", **btn_styles, command=self.export_list_click)  
         self.export_list_button.place(x=10,y=10)
 
         #导入列表按钮
-        self.import_list_button = Button_PX(self.container, text="导入列表", width=80,command=self.import_list_click)  
+        self.import_list_button = Button_PX(self.container, text="导入列表", **btn_styles,command=self.import_list_click)  
         self.import_list_button.place(x=100,y=10)
 
         #清空列表按钮
-        self.clear_list_button = Button_PX(self.container, text="清空列表", width=80,command=self.clear_list_click)  
+        self.clear_list_button = Button_PX(self.container, text="清空列表", **btn_styles,command=self.clear_list_click)  
         self.clear_list_button.place(x=190,y=10)
 
         #选择文件按钮
-        self.open_file_button = Button_PX(self.container, text="选择文件", width=80,command=self.open_file_click) 
+        self.open_file_button = Button_PX(self.container, text="选择文件", **btn_styles,command=self.open_file_click) 
         self.open_file_button.place(x=280,y=10)
 
         #合并按钮
-        self.merge_button = Button_PX(self.container, text="合并", width=80,command=self.merge_click)  
+        self.merge_button = Button_PX(self.container, text="合并", **btn_styles,command=self.merge_click)  
         self.merge_button.place(x=370,y=10)
 
         #删除按钮
         #self.delete_button = Button_PX(self.container, text="删除",width=80,command=self.delete_item_click) 
-        self.delete_button = Button_PX(self.container, text="删除",width=80) 
-        self.delete_button.place(x=460,y=10)
+        #self.delete_button = Button_PX(self.container, text="删除",width=80) 
+        #self.delete_button.place(x=460,y=10)
+
+        #设置按钮
+        self.setting_button = Button_PX(self.container, text="设置", **btn_styles,command = self.setting_click) 
+        self.setting_button.place(x=460,y=10)
 
         #上移按钮
-        self.up_button = Button_PX(self.container, text="向上", width=80,command=self.up_item_click)  
+        self.up_button = Button_PX(self.container, text="向上", **btn_styles,command=self.up_item_click)  
         self.up_button.place(x=10,y=40)
 
         #下移按钮
-        self.down_button = Button_PX(self.container, text="向下", width=80,command=self.down_item_click)  
+        self.down_button = Button_PX(self.container, text="向下", **btn_styles,command=self.down_item_click)  
         self.down_button.place(x=100,y=40)
 
         #导出文件夹标签
-        self.init_Label = Label_PX(self.container,text="导出文件",width=60,height=20)
+        self.init_Label = Label_PX(self.container,text="导出文件")
         self.init_Label.place(x=10,y=100)
 
         #导出文件路径文本框
-        self.export_Text = Text_PX(self.container, width=610, height=25)
+        self.export_Text = Text_PX(self.container, width=610, height=25,**text_styles)
         self.export_Text.place(x=80,y=100)
         #self.export_Text.insert(1.0,self.output_path)
 
         #打开导出文件路径按钮
-        self.export_open_button = Button_PX(self.container, text="打开", width=50,command=self.export_open_click)  
+        self.export_open_button = Button_PX(self.container, text="打开",**btn_styles,command=self.export_open_click)  
         self.export_open_button.place(x=700,y=100)
 
         #创建列表组件
@@ -161,6 +186,12 @@ class Init_Window():
         self.file_Listbox.select_set(self.index)
         self.file_Listbox.activate(self.index)
         print(self.index)
+
+    #打开设置窗口函数
+    def setting_click(self):
+        
+        self.sub_Window =Setting_Window(Toplevel())
+        self.sub_Window.init()
 
     #打开导出目录函数
     def export_open_click(self):
