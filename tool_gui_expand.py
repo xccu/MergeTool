@@ -28,6 +28,7 @@ class Label_PX():
         self.label["bg"] = get_value("bg",kw)
         self.label["fg"] = get_value("fg",kw)
         self.label["font"] = get_value("font",kw)
+        self.label["background"] =  get_value("background",kw)
         self.label.pack()
 
     def place(self,x,y):

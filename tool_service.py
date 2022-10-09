@@ -78,10 +78,7 @@ class Merge_Service():
     def default_print(self,data):
         print(str(data))
     
-    def merge(self,pathlist,fileName):
-        if len(fileName) == 0 or fileName =='\n':
-            fileName =  datetime.datetime.strftime(datetime.datetime.now(),'%Y%m%d%H%M%S')+'.ts'
-            print(fileName)
+    def merge(self,pathlist,fileName):       
         self.print_func(pathlist)
         #os.chdir("ts/")
         os.chdir(self.output_path)
