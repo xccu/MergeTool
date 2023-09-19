@@ -138,3 +138,56 @@ class Button_PX():
 
     def on_leave(self,e):
         self.button['background'] = get_value("leaveBg",self.kw)
+
+
+#ListBox控件，宽高单位：像素
+class Listbox_PX():
+    def __init__(self,root,**kw):
+        self.kw = kw
+        self.width = get_value("width",kw)
+        self.height = get_value("height",kw)
+        self.bd = get_value("bd",kw)
+
+        if self.width is None : self.width=80
+        if self.height is None : self.height=25
+
+        #根Frame
+        self.r_frame = Frame(root)
+        self.r_frame["width"] = self.width
+        self.r_frame["height"] = self.height
+        self.r_frame["bg"] = get_value("bdcolor",kw)
+
+        #子Frame
+        self.frame = Frame(self.r_frame)
+        self.frame["width"] = self.width-self.bd*2
+        self.frame["height"] = self.height-self.bd*2
+        self.frame["bg"] = get_value("bg",kw)
+        self.frame.place(x=self.bd,y=self.bd)
+        self.frame.pack_propagate(0)
+
+        self.control = Listbox(self.frame)
+        self.control["relief"] = get_value("relief",kw)
+        self.control["text"] =get_value("text",kw)
+        self.control["width"] = self.width
+        self.control["height"] = self.height
+        self.control["image"] = self.img
+        self.control["bd"] = 0
+        self.control["bg"] = get_value("bg",kw)
+        self.control["fg"] = get_value("fg",kw)
+        self.control["font"] = get_value("font",kw)
+        self.control["command"] = get_value("command",kw)
+        self.control["compound"]=get_value("compound",kw)
+        self.control["background"]=get_value("background",kw)
+        self.control["activebackground"]=get_value("activebackground",kw)
+        self.control.bind("<Enter>", self.on_enter)
+        self.control.bind("<Leave>", self.on_leave)
+        self.control.pack()
+
+    def place(self,x,y):
+         self.r_frame.place(x=x,y=y)
+
+    def on_enter(self,e):
+        self.control['background'] = get_value("enterBg",self.kw)
+
+    def on_leave(self,e):
+        self.control['background'] = get_value("leaveBg",self.kw)
